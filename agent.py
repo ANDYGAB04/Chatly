@@ -19,14 +19,14 @@ from tools import tools
 
 Path("data").mkdir(exist_ok=True)
 
-DEFAULT_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+DEFAULT_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
 
 ALLOWED_MODELS = {
-    "gemini-2.5-flash",
-    "gemini-2.5-pro",
-    "gemini-2.5-flash-lite",
-    "gemini-1.5-flash",
-    "gemini-1.5-pro",
+    "gemini-3.8-flash",
+    "gemini-3.5-pro",
+    "gemini-3.5-flash-lite",
+    "gemini-3.1-flash-lite",
+    "gemini-3.1-pro",
 }
 
 
@@ -82,7 +82,7 @@ def build_agent(model_name: str):
     llm_with_tools = llm.bind_tools(tools)
 
     def chatbot_node(state: MessagesState):
-        messages = [SystemMessage(content=SYSTEM_PROMPT) + state["messages"]]
+        messages = [SystemMessage(content=SYSTEM_PROMPT)] + state["messages"]
 
         response = llm_with_tools.invoke(messages)
 
